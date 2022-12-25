@@ -19,7 +19,7 @@ public class MainSystem {
                     System.out.println("ID格式错误");
                     continue;
                 }
-                Employee employee = EmployeeDAO.getEmployeeById(id);
+               /* Employee employee = EmployeeDAO.getEmployeeById(id);
                 if (employee == null) {
                     System.out.println("ID不存在");
                 } else {
@@ -33,7 +33,7 @@ public class MainSystem {
                         InstructorOperation operation = new InstructorOperation(employee);
                         operation.start();
                     }
-                }
+                }*/
             }
         }
     }
