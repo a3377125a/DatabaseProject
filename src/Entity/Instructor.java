@@ -1,15 +1,16 @@
 package Entity;
 
-public class Admin {
-    private String id,name,dept_name;
+public class Instructor {
+    private String id,name,dept_name,className;
 
-    public Admin() {
+    public Instructor() {
     }
 
-    public Admin(String id, String name, String dept_name) {
+    public Instructor(String id, String name, String dept_name, String className) {
         this.id = id;
         this.name = name;
         this.dept_name = dept_name;
+        this.className = className;
     }
 
     public String getId() {
@@ -36,12 +37,21 @@ public class Admin {
         this.dept_name = dept_name;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     @Override
     public String toString() {
-        return "Admin{" +
+        return "Instructor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", dept_name='" + dept_name + '\'' +
+                ", className='" + className + '\'' +
                 '}';
     }
 }

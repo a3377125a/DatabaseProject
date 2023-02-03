@@ -4,6 +4,7 @@ import Entity.Student;
 import Utils.DBUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,20 @@ public class StudentDAO implements StudentImplement {
         return null;
     }
 
+    @Override
+    public Boolean IsStudent(Connection conn, String id) {
+        String sql="select count(*)  from student where s_id=?";
+        long m= 0;
+        try {
+            m = queryRunner.query(conn,sql,new ScalarHandler<>(),id);
+            if(m==0) return false;
+            else  return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /*
         public static boolean insertStudent(Student student) {
             try {
@@ -41,22 +56,16 @@ public class StudentDAO implements StudentImplement {
             return false;
         }*/
     public boolean InsertStudent(Connection conn,Student student) {
-        String sql = "insert into student () values(?, ?, ?, ?)";
-        return true;
-    }
-
-    public static void main(String[] args) {
-        Connection connection = null;
+        String sql = "insert into student () values(?, ?, ?, ?,?,?,?,?,?,?)";
         try {
-            connection = DBUtil.getConnection();
-            StudentDAO studentDAO = new StudentDAO();
-            Student student = studentDAO.GetStudent(connection, "20301234567");
-            System.out.println(student);
+            queryRunner.update(conn,sql,student.getAdress(),student.getClassName(),student.getName(),
+                    student.getDepartment(),student.getEmail(),student.getFamilyAdress(),student.getS_id(),student.getTellphone(),student.getType(),student.getIdNumber());
+            return  true;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            DBUtil.closeResource(connection);
         }
-
+        return false;
     }
+
+
 }
