@@ -25,9 +25,14 @@ public class DBUtil {
     }
     private static  DruidDataSource source;
 
-    public static Connection getConnection() throws Exception {
-        Connection conn=source.getConnection();
-        return   source.getConnection();
+    public static Connection getConnection() {
+        try {
+            Connection conn=source.getConnection();
+            return conn;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return   null;
     }
 
     public static void closeResource(Connection conn) {
