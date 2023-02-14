@@ -1,7 +1,7 @@
 package Entity;
 
 public class Instructor {
-    private String id,name,dept_name,className;
+    private String id, name, dept_name, className;
 
     public Instructor() {
     }

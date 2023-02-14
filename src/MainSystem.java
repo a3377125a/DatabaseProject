@@ -73,10 +73,14 @@ public class MainSystem {
                 } else if (n == 5) {
                     // 辅导员登录系统
                     if (i_confirm(ID)) {
-                        ClassAdminOperation instructorOperation = new ClassAdminOperation();
+                        ClassAdminOperation instructorOperation = new ClassAdminOperation(ID);
+
+
+
                     } else {
                         System.out.println("输入工号无效");
                     }
+
                 } else if (n == 4) {
                     //院系管理员登录系统
                     if (a_confirm(ID)) {
