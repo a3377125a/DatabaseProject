@@ -39,7 +39,10 @@ public class DBUtil {
         }
     }
 
-
+    public static Connection restart(Connection conn) {
+        closeResource(conn);
+        return getConnection();
+    }
 
 
 

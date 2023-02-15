@@ -1,5 +1,7 @@
 package DAO;
 
+import Entity.Student;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -14,15 +16,18 @@ public interface LogDAOImplement {
     List<Object[]> getLeaveStudents(Connection conn) ;
     //已出校但尚未返回校园（即离校状态）的学生数量、个人信息及各自的离校时间，院系范围内即院系管理员查询
     List<Object[]> getLeaveStudents1(Connection conn,String a_id) ;
-    //已出校但尚未返回校园（即离校状态）的学生数量、个人信息及各自的离校时间，全校范围内即班级辅导员查询
-    List<Object[]> getLeaveStudents2(Connection conn,String i_id) ;
+
+    //    班级范围内
+    List<Object[]> getLeaveStudents2(Connection conn, String className, int deptID);
 
     //过去 n 天一直在校未曾出校的学生，全校进行筛选
     List<String> UnLeaveStudent(Connection conn, int n) ;
+
     //过去 n 天一直在校未曾出校的学生，全系进行筛选(输入的是院系名)
-    public List<String> UnLeaveStudent1(Connection conn, int n,String dept_name);
+    List<Student> UnLeaveStudent1(Connection conn, int n, int deptID);
+
     //过去 n 天一直在校未曾出校的学生，全班进行筛选(需要院系名和班级名共同确定一个班级）
-    public List<String> UnLeaveStudent2(Connection conn, int n,String dept_name,String className);
+    List<Student> UnLeaveStudent2(Connection conn, int n, String className, int deptID);
 
     //查询学生（从当天算起）过去一年的离校总时长。
     String LeaveTime(Connection conn,String s_id);

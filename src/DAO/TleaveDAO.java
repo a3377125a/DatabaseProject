@@ -1,7 +1,9 @@
 package DAO;
 
+import Entity.Student;
 import Entity.Tcome;
 import Entity.Tleave;
+import Utils.DBUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -53,7 +55,7 @@ public class TleaveDAO implements TleaveDAOImplement {
 
     @Override
     public Boolean reject(Connection conn, String t_id, String comment) {
-        String sql = "update t_leave set state=3,comment=? where t_id=? ";
+        String sql = "update t_leave set state=4,comment=? where t_id=? ";
         try {
             queryRunner.update(conn, sql, comment, t_id);
             return true;
@@ -99,5 +101,80 @@ public class TleaveDAO implements TleaveDAOImplement {
         return null;
     }
 
+    //    查询未提交出校申请但离校状态超过 24h 的学生数量、个人信息。
+    public List<Student> getOver24H(Connection conn, String className, String deptID) {
 
+        String sql = "SELECT DISTINCT\n" +
+                "ss1.s_id,student.name\n" +
+                "FROM\n" +
+                "student_state AS ss1\n" +
+                "NATURAL JOIN student\n" +
+                "WHERE\n" +
+                "student.deptId = ? AND\n" +
+                "student.className = ? AND\n" +
+                "ss1.action = \"离校\" AND\n" +
+                "ss1.time1 <= ? AND\n" +
+                "ss1.s_id NOT IN \n" +
+                "(\n" +
+                "SELECT\n" +
+                "student_state.s_id\n" +
+                "FROM\n" +
+                "student_state\n" +
+                "NATURAL JOIN t_leave\n" +
+                "WHERE\n" +
+                "t_leave.state = 3 AND\n" +
+                "student_state.action = \"离校\" AND\n" +
+                "student_state.time1 >= t_leave.leavedate AND\n" +
+                "t_leave.comedate >= ?\n" +
+                ")\n";
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            Calendar calendar2 = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar2.setTime(new Date());
+            calendar.add(Calendar.DATE, -1);
+            return queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), deptID, className, sdf.format(calendar.getTime()), sdf.format(calendar2.getTime()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    //    查询已提交出校申请但未离校的学生数量、个人信息；
+    public List<Student> getStays(Connection conn, String className, String deptID){
+
+        String sql = "SELECT DISTINCT\n" +
+                "student_state.s_id,student.name\n" +
+                "FROM\n" +
+                "student_state\n" +
+                "NATURAL JOIN student\n" +
+                "NATURAL JOIN t_leave\n" +
+                "WHERE\n" +
+                "student.deptId = ? AND\n" +
+                "student.className = ? AND\n" +
+                "student_state.action = \"入校\" AND\n" +
+                "t_leave.state = 3 AND\n" +
+                "t_leave.leavedate <= ?\n";
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            return queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), deptID, className, sdf.format(calendar.getTime()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+
+
+    }
 }

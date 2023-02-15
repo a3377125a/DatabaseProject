@@ -1,8 +1,8 @@
 package Entity;
 
 public class Student {
-    private String s_id,name,className;
-    private String email,adress,familyAdress,IdNumber,type,tellphone,department;
+    private String s_id, name, className;
+    private String email, adress, familyAdress, IdNumber, type, tellphone, department;
 
     public Student() {
     }
@@ -105,16 +105,16 @@ public class Student {
     @Override
     public String toString() {
         return
-                "学号：'" + s_id  +"\n"+
-                "姓名：" + name + '\n' +
-                "班级：" + className + '\n' +
-                "院系：" + department +'\n'+
-                "电话：" + tellphone +"\n"+
-                "邮箱：" + email + '\n' +
-                "住址：" + adress +"\n"+
-                "家庭住址：" + familyAdress + '\n' +
-                "身份证号码" + IdNumber + '\n' +
-                "身份证类型" + type + "\n"
+                "学号：" + s_id + "\n" +
+                        "姓名：" + name + '\n' +
+                        "班级：" + className + '\n' +
+                        "院系：" + department + '\n' +
+                        "电话：" + tellphone + "\n" +
+                        "邮箱：" + email + '\n' +
+                        "住址：" + adress + "\n" +
+                        "家庭住址：" + familyAdress + '\n' +
+                        "身份证号码：" + IdNumber + '\n' +
+                        "身份证类型：" + type + "\n"
                 ;
     }
 }

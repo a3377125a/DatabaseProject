@@ -55,7 +55,7 @@ public class TcomeDAO implements TcomeDAOImplement {
 
     @Override
     public Boolean reject(Connection conn, String t_id, String comment) {
-        String sql = "update t_come set state=3,comment=? where t_id=? ";
+        String sql = "update t_come set state=4,comment=? where t_id=? ";
         try {
             queryRunner.update(conn, sql, comment, t_id);
             return true;
