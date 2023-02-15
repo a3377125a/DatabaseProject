@@ -171,21 +171,30 @@ public class ClassAdminOperation {
         System.out.println("请输入n值：");
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-
-
-
-
-
-
+        TcomeDAO tcomeDAO = new TcomeDAO();
+        Connection conn = DBUtil.getConnection();
+        List<Student> list = tcomeDAO.getNMostStudent(conn, n, instructor.getClassName(), instructor.getDeptId());
+        System.out.println("前 " + n + " 个提交入校申请最多的学生如下：");
+        for (Student student : list) {
+            System.out.println(student.getName() + " " + student.getS_id());
+        }
+        DBUtil.closeResource(conn);
 
     }
     public void fun4() {
 
     }
+
     public void fun5() {
 
     }
+
+
+//      查询未提交出校申请但离校状态超过 24h 的学生数量、个人信息；
     public void fun6() {
+
+
+
 
     }
     public void fun7() {

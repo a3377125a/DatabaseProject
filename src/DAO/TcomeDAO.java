@@ -67,17 +67,21 @@ public class TcomeDAO implements TcomeDAOImplement {
 
     public List<Student> getNMostStudent(Connection conn, int n, String className, int deptID) {
         String sql = "SELECT\n" +
-                "t_come.s_id-\n" +
+                "t_come.s_id,\n" +
+                "student.name\n" +
                 "FROM\n" +
                 "t_come\n" +
                 "NATURAL JOIN student\n" +
+                "WHERE\n" +
+                "student.className = ? AND\n" +
+                "student.deptId = ?\n" +
                 "GROUP BY\n" +
                 "t_come.s_id\n" +
                 "ORDER BY\n" +
                 "COUNT(*) DESC\n" +
                 "LIMIT ?\n";
         try {
-            return queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), n);
+            return queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), className, deptID, n);
         } catch (SQLException e) {
             e.printStackTrace();
         }
