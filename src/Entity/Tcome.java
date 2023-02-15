@@ -4,22 +4,30 @@ import java.util.Date;
 
 public class Tcome {
     private String s_id, reason, Addresses;
-    private Date comedate;
+    private Date comedate, date;
     private int state; //0，1，2,3代表未审批/辅导员已审批/管理员已审批（已完成）/已拒绝三个状态
     private String comment;
 
     public Tcome() {
     }
 
-    public Tcome(String s_id, String reason, String addresses, Date comedate, int state, String comment) {
+    public Tcome(String s_id, String reason, String addresses, Date comedate, Date date, int state, String comment) {
         this.s_id = s_id;
         this.reason = reason;
         Addresses = addresses;
         this.comedate = comedate;
+        this.date = date;
         this.state = state;
         this.comment = comment;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getS_id() {
         return s_id;
@@ -69,15 +77,28 @@ public class Tcome {
         this.comment = comment;
     }
 
+    public String getState1(){
+        String s=null;
+        switch (state){
+            case 0:s="待辅导员审批";break;
+            case 1:s="待院系审批";break;
+            case 2:s="申请已成功";break;
+            case 3:s="申请被拒绝";break;
+        }
+        return  s;
+    }
+
     @Override
     public String toString() {
-        return "Tcome{" +
-                "s_id='" + s_id + '\'' +
-                ", reason='" + reason + '\'' +
-                ", Addresses='" + Addresses + '\'' +
-                ", comedate=" + comedate +
-                ", state=" + state +
-                ", comment='" + comment + '\'' +
-                '}';
+        String s = "------------------------\n"+"    入校申请\n"+
+                "学生ID:" + s_id + '\n' +
+                "入校原因：" + reason + '\n' +
+                "近7日内途径地区：" + Addresses + '\n' +
+                "拟返校日期：" + comedate + '\n' +
+                "申请日期：" + date + '\n' +
+                "当前申请状态：" + getState1()+'\n';
+        if((state==3)&&(comment!=null))
+            s+="拒绝理由为："+comment+"\n";
+        return s;
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface TcomeDAOImplement {
     //添加入校申请
     public  Boolean addTcome(Connection conn, String s_id,String reason,String Addresses,
-                             Date comedate);
+                             Date comedate,Date date);
     //查看对应学生的对应状态申请
     public List<Tcome> getTcome(Connection conn,String s_id,int state);
 

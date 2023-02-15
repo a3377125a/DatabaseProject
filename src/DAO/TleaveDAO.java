@@ -12,10 +12,10 @@ import java.util.List;
 public class TleaveDAO implements TleaveDAOImplement {
     private QueryRunner queryRunner=new QueryRunner();
     @Override
-    public Boolean addTleave(Connection conn, String s_id, String reason, String destAdress, Date leavedate, Date comedate) {
-        String sql="insert into t_leave(s_id,reason,destAdress,leavedate,comedate) values(?,?,?,?.?)";
+    public Boolean addTleave(Connection conn, String s_id, String reason, String destAdress, Date leavedate, Date comedate,Date date) {
+        String sql="insert into t_leave(s_id,reason,destAdress,leavedate,comedate,state,date) values(?,?,?,?,?,0,?)";
         try {
-            queryRunner.update(conn,sql,s_id,reason,destAdress,leavedate,comedate);
+            queryRunner.update(conn,sql,s_id,reason,destAdress,leavedate,comedate,date);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,7 +24,7 @@ public class TleaveDAO implements TleaveDAOImplement {
 
     @Override
     public List<Tleave> getTleave(Connection conn, String s_id, int state) {
-        String sql="select * from t_leave where s_id=? and sate=?";
+        String sql="select * from t_leave where s_id=? and state=?";
         try {
             List<Tleave> tleaves=  queryRunner.query(conn,sql,new BeanListHandler<>(Tleave.class),s_id,state);
             return  tleaves;

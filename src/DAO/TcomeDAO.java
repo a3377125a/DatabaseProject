@@ -12,10 +12,10 @@ import java.util.List;
 public class TcomeDAO implements TcomeDAOImplement {
     private QueryRunner queryRunner=new QueryRunner();
     @Override
-    public Boolean addTcome(Connection conn, String s_id, String reason, String Addresses, Date comedate) {
-        String sql="INSERT into  t_come(s_id,reason,Addresses,comedate,state)  VALUES (?,?,?,?,0)";
+    public Boolean addTcome(Connection conn, String s_id, String reason, String Addresses, Date comedate,Date date) {
+        String sql="INSERT into  t_come(s_id,reason,Addresses,comedate,state,date)  VALUES (?,?,?,?,0,?)";
         try {
-            queryRunner.update(conn,sql,s_id,reason,Addresses,comedate);
+            queryRunner.update(conn,sql,s_id,reason,Addresses,comedate,date);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class TcomeDAO implements TcomeDAOImplement {
 
     @Override
     public List<Tcome> getTcome(Connection conn, String s_id, int state) {
-        String sql="select * from t_come where s_id=? and sate=?";
+        String sql="select * from t_come where s_id=? and state=?";
         try {
           List<Tcome> tcomes=  queryRunner.query(conn,sql,new BeanListHandler<>(Tcome.class),s_id,state);
           return  tcomes;

@@ -10,7 +10,7 @@ import java.util.List;
 public interface TleaveDAOImplement {
     //添加离校申请
     public Boolean addTleave(Connection conn, String s_id, String reason, String destAdress,
-                             Date leavedate, Date comedate);
+                             Date leavedate, Date comedate,Date date);
 
     //查看对应学生的对应状态申请
     public List<Tleave> getTleave(Connection conn, String s_id, int state);

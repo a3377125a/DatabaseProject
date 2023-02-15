@@ -104,17 +104,17 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "s_id='" + s_id + '\'' +
-                ", name='" + name + '\'' +
-                ", className='" + className + '\'' +
-                ", tellphone=" + tellphone +
-                ", department=" + department +
-                ", email='" + email + '\'' +
-                ", adress='" + adress + '\'' +
-                ", familyAdress='" + familyAdress + '\'' +
-                ", IdNumber='" + IdNumber + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+        return
+                "学号：'" + s_id  +"\n"+
+                "姓名：" + name + '\n' +
+                "班级：" + className + '\n' +
+                "院系：" + department +'\n'+
+                "电话：" + tellphone +"\n"+
+                "邮箱：" + email + '\n' +
+                "住址：" + adress +"\n"+
+                "家庭住址：" + familyAdress + '\n' +
+                "身份证号码" + IdNumber + '\n' +
+                "身份证类型" + type + "\n"
+                ;
     }
 }

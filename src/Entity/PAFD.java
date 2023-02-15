@@ -53,11 +53,10 @@ public class PAFD {
 
     @Override
     public String toString() {
-        return "PAFD{" +
-                "s_id='" + s_id + '\'' +
-                ", address='" + address + '\'' +
-                ", date=" + date +
-                ", temper=" + temper +
-                '}';
+        return "    填写日期：" +date+"     "+'\n'+
+                "学生ID:'" + s_id + '\n' +
+                "定位：" + address + '\n' +
+                "当日温度" + temper +'\n'
+                ;
     }
 }
