@@ -122,7 +122,7 @@ public class LogDAO implements LogDAOImplement {
         Date time = calendar.getTime();
         List<String> list = null;
         try {
-            list = queryRunner.query(conn, sql, new ColumnListHandler<String>(), time);
+            list = queryRunner.query(conn, sql, new ColumnListHandler<>(), time);
         } catch (SQLException e) {
             e.printStackTrace();
         }

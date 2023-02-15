@@ -8,7 +8,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class AdminDAO implements  AdminImplement{
+public class AdminDAO implements  AdminImplement {
     private QueryRunner queryRunner = new QueryRunner();
 
     @Override
@@ -24,12 +24,12 @@ public class AdminDAO implements  AdminImplement{
     }
 
     public Boolean IsAdmin(Connection conn, String id) {
-        String sql="select count(*)  from admin where a_id=?";
-        long m= 0;
+        String sql = "select count(*)  from admin where a_id=?";
+        long m = 0;
         try {
-            m = queryRunner.query(conn,sql,new ScalarHandler<>(),id);
-            if(m==0) return false;
-            else  return true;
+            m = queryRunner.query(conn, sql, new ScalarHandler<>(), id);
+            if (m == 0) return false;
+            else return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -15,7 +15,7 @@ public class InstructorDAO implements InstructorImplement{
 
     @Override
     public Instructor GetInstructor(Connection conn, String id) {
-        String sql = "SELECT i_id as id,name,className,dept_name from instructor NATURAL join class NATURAL join department where i_id=?";
+        String sql = "SELECT i_id as id,name,className,deptId,dept_name from instructor NATURAL join class NATURAL join department where i_id=?";
         try {
             Instructor instructor = queryRunner.query(conn, sql, new BeanHandler<>(Instructor.class), id);
             return instructor;
