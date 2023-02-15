@@ -7,6 +7,8 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,10 +69,7 @@ public class TcomeDAO implements TcomeDAOImplement {
                 "Count(*)\n" +
                 "FROM\n" +
                 "t_come\n" +
-                "INNER JOIN student\n" +
-                "WHERE\n" +
-                "t_come.s_id = student.s_id AND\n" +
-                "\n" +
+                "NATURAL JOIN student\n" +
                 "GROUP BY\n" +
                 "t_come.s_id\n" +
                 "ORDER BY\n" +
@@ -78,6 +77,32 @@ public class TcomeDAO implements TcomeDAOImplement {
                 "LIMIT ?\n";
         try {
             return queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), n);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Tcome> getNTcome(Connection conn, int n, String className, String deptID) {
+
+        String sql = "SELECT\n" +
+                "*\n" +
+                "FROM\n" +
+                "t_come\n" +
+                "NATURAL JOIN student\n" +
+                "WHERE\n" +
+                "student.deptId = ? AND\n" +
+                "student.className = ? AND\n" +
+                "t_come.date >= ? AND\n" +
+                "t_come.state <= 2";
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DATE, -n);
+            return queryRunner.query(conn, sql, new BeanListHandler<>(Tcome.class), deptID, className, sdf.format(calendar.getTime()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

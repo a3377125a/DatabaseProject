@@ -1,14 +1,13 @@
 package Operation;
 
-import DAO.InstructorDAO;
-import DAO.InstructorImplement;
-import DAO.StudentDAO;
-import DAO.StudentImplement;
+import DAO.*;
 import Entity.Instructor;
 import Entity.Student;
+import Entity.Tcome;
 import Utils.DBUtil;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 public class ClassAdminOperation {
@@ -76,17 +75,34 @@ public class ClassAdminOperation {
 
 //    查询过去 n 天尚未批准的入校申请和出校申请数量及详细信息
     public void fun2() {
-        System.out.println("请输入n：");
+//  1 班级 2 院系 3 已完成 4 已拒绝
+
+        System.out.println("a.查询入校申请");
+        System.out.println("b.查询出校申请");
+        System.out.println("请选择：");
         Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();
+        System.out.println("请输入n值：");
         int n = scanner.nextInt();
+        Connection conn = DBUtil.getConnection();
+
+        if (choice.equals("a")) {
+            TcomeDAO tcomeDAO = new TcomeDAO();
+            List<Tcome> list = tcomeDAO.getNTcome(conn, n, "1班", "2");
+            System.out.println("11");
+
+
+
+        } else if (choice.equals("b")) {
+
+        }
 
 
 
 
 
 
-
-
+        DBUtil.closeResource(conn);
     }
 
 //    查询前 n 个提交入校申请最多的学生
@@ -94,7 +110,6 @@ public class ClassAdminOperation {
         System.out.println("请输入n：");
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-
 
 
 

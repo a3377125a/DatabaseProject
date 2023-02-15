@@ -149,6 +149,7 @@ public class StudentOperation {
         System.out.println("请输入n值：");
         int n = scanner.nextInt();
         pafddaoImplement.getPAFDs(conn, student.getS_id(), n);
+        DBUtil.closeResource(conn);
     }
 
     public void fun7() {

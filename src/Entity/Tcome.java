@@ -5,7 +5,7 @@ import java.util.Date;
 public class Tcome {
     private String s_id, reason, Addresses;
     private Date comedate;
-    private int state; //0，1，2,3代表未审批/辅导员已审批/管理员已审批（已完成）/已拒绝三个状态
+    private int state; //1，2，3,4代表未审批/辅导员已审批/管理员已审批（已完成）/已拒绝三个状态
     private String comment;
 
     public Tcome() {
