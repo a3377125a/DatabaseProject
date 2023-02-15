@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class InstructorDAO implements InstructorImplement{
-    private QueryRunner queryRunner = new QueryRunner();
+    private final QueryRunner queryRunner = new QueryRunner();
 
     @Override
     public Instructor GetInstructor(Connection conn, String id) {

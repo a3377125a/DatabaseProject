@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class MainSystem {
     //确认是否是学生
-    public static Boolean s_confirm(String id){
+    public static Boolean s_confirm(String id) {
         //学生登录系统
         StudentImplement stuImpl = new StudentDAO();
         Connection conn = null;
@@ -22,31 +22,34 @@ public class MainSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  stuImpl.IsStudent(conn,id);
+        return stuImpl.IsStudent(conn, id);
 
     }
+
     //确认是否是班级辅导员
-    public static Boolean i_confirm(String id){
-        InstructorImplement insImpl=new InstructorDAO();
+    public static Boolean i_confirm(String id) {
+        InstructorImplement insImpl = new InstructorDAO();
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (insImpl.IsInstructor(conn,id)) ;
+        return (insImpl.IsInstructor(conn, id));
     }
+
     //确认是否是院系管理员
-    public static Boolean a_confirm(String id){
-        AdminImplement adImpl=new AdminDAO();
+    public static Boolean a_confirm(String id) {
+        AdminImplement adImpl = new AdminDAO();
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  (adImpl.IsAdmin(conn, id));
+        return (adImpl.IsAdmin(conn, id));
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -60,27 +63,32 @@ public class MainSystem {
                 int n = ID.length();
                 if (n == 11) {
                     //学生登录系统
-                    if(s_confirm(ID)){
-                        StudentOperation studentOperation=new StudentOperation(ID);
-                    }else{
+                    if (s_confirm(ID)) {
+                        System.out.println("登录成功！您当前的权限为：学生。");
+                        StudentOperation studentOperation = new StudentOperation(ID);
+                    } else {
                         System.out.println("输入学号无效");
                     }
 
-                } else if ( n == 5) {
+                } else if (n == 5) {
                     // 辅导员登录系统
-                   if(i_confirm(ID)){
-                       ClassAdminOperation instructorOperation=new ClassAdminOperation();
-                   }else {
+                    if (i_confirm(ID)) {
+                        ClassAdminOperation instructorOperation = new ClassAdminOperation(ID);
+
+
+
+                    } else {
                         System.out.println("输入工号无效");
                     }
+
                 } else if (n == 4) {
                     //院系管理员登录系统
-                   if(a_confirm(ID)){
-                       DeptAdminOperation adminOperation=new DeptAdminOperation();
-                   }else {
+                    if (a_confirm(ID)) {
+                        DeptAdminOperation adminOperation = new DeptAdminOperation();
+                    } else {
                         System.out.println("输入工号无效");
                     }
-                }else{
+                } else {
                     System.out.println("输入格式错误！");
                 }
 

@@ -159,6 +159,7 @@ public class StudentOperation {
         for (PAFD p : pafDs) {
             System.out.println(p);
         }
+        DBUtil.closeResource(conn);
     }
 
     void show1() {
@@ -182,10 +183,10 @@ public class StudentOperation {
             int n = scanner.nextInt();
             if (n == 5) flag = false;
             List<Tcome> tcomes = switch (n) {
-                case 1 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 0);
-                case 2 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 1);
-                case 3 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 2);
-                case 4 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 3);
+                case 1 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 1);
+                case 2 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 2);
+                case 3 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 3);
+                case 4 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 4);
                 default -> null;
             };
             if (tcomes != null) {
@@ -214,10 +215,10 @@ public class StudentOperation {
             int n = scanner.nextInt();
             if(n==5) flag=false;
             List<Tleave> tleaves = switch (n) {
-                case 1 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 0);
-                case 2 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 1);
-                case 3 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 2);
-                case 4 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 3);
+                case 1 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 1);
+                case 2 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 2);
+                case 3 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 3);
+                case 4 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 4);
                 default -> null;
             };
             if (tleaves != null) {

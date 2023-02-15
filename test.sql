@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 15/02/2023 09:20:54
+ Date: 15/02/2023 18:51:09
 */
 
 SET NAMES utf8mb4;
@@ -122,17 +122,18 @@ CREATE TABLE `class`  (
 -- ----------------------------
 INSERT INTO `class` VALUES ('1班', 1, '01001');
 INSERT INTO `class` VALUES ('1班', 2, '02001');
-INSERT INTO `class` VALUES ('2班', 1, '01002');
+INSERT INTO `class` VALUES ('1班', 4, '01006');
+INSERT INTO `class` VALUES ('2班', 3, '01005');
+INSERT INTO `class` VALUES ('2班', 5, '01004');
 INSERT INTO `class` VALUES ('3班', 1, '01003');
-INSERT INTO `class` VALUES ('4班', 1, '01004');
-INSERT INTO `class` VALUES ('5班', 1, '01005');
+INSERT INTO `class` VALUES ('3班', 7, '01002');
 
 -- ----------------------------
 -- Table structure for department
 -- ----------------------------
 DROP TABLE IF EXISTS `department`;
 CREATE TABLE `department`  (
-  `deptId` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deptId` int NOT NULL AUTO_INCREMENT,
   `dept_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `a_id` char(5) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`deptId`) USING BTREE
@@ -174,6 +175,7 @@ INSERT INTO `hjoutnal` VALUES ('20301234568', '2023-02-09 12:00:00', 'Shanghai',
 INSERT INTO `hjoutnal` VALUES ('20301234568', '2023-02-10 21:00:00', 'Shanghai', 37.1);
 INSERT INTO `hjoutnal` VALUES ('20301234568', '2023-02-11 15:00:00', 'Shanghai', 36.4);
 INSERT INTO `hjoutnal` VALUES ('20301234568', '2023-02-12 15:50:55', 'shanghai', 36.7);
+INSERT INTO `hjoutnal` VALUES ('20301234568', '2023-02-15 15:30:17', '湖北', 37.1);
 
 -- ----------------------------
 -- Table structure for instructor
@@ -193,6 +195,7 @@ INSERT INTO `instructor` VALUES ('01002', 'bbb');
 INSERT INTO `instructor` VALUES ('01003', 'ccc');
 INSERT INTO `instructor` VALUES ('01004', 'ddd');
 INSERT INTO `instructor` VALUES ('01005', 'eee');
+INSERT INTO `instructor` VALUES ('01006', 'rrrr');
 INSERT INTO `instructor` VALUES ('02001', 'aaaa');
 
 -- ----------------------------
@@ -223,6 +226,11 @@ INSERT INTO `log` VALUES (9, '20301234572', 1, '2022-12-21 08:56:28', '离校');
 INSERT INTO `log` VALUES (10, '20301234570', 3, '2022-12-21 10:56:15', '入校');
 INSERT INTO `log` VALUES (11, '20301234574', 2, '2022-12-21 11:00:37', '入校');
 INSERT INTO `log` VALUES (12, '20301234573', 2, '2022-12-21 11:57:27', '离校');
+INSERT INTO `log` VALUES (13, '20301234567', 1, '2023-01-11 10:04:38', '入校');
+INSERT INTO `log` VALUES (14, '20301234567', 1, '2023-01-10 12:05:17', '离校');
+INSERT INTO `log` VALUES (15, '20301234567', 2, '2023-02-02 20:11:54', '入校');
+INSERT INTO `log` VALUES (16, '20301234567', 2, '2023-02-11 11:06:18', '离校');
+INSERT INTO `log` VALUES (17, '20301234567', 1, '2023-02-15 10:07:12', '入校');
 
 -- ----------------------------
 -- Table structure for school
@@ -287,7 +295,9 @@ CREATE TABLE `t_come`  (
 -- ----------------------------
 -- Records of t_come
 -- ----------------------------
-INSERT INTO `t_come` VALUES (1, '20301234568', '假期返校', '湖北', '2023-02-20', 0, NULL, NULL);
+INSERT INTO `t_come` VALUES (1, '20301234568', '假期返校', '湖北', '2023-02-20', 3, 'xxxxxxx', '2023-02-06 15:44:34');
+INSERT INTO `t_come` VALUES (2, '20301234567', '假期返校', '上海', '2023-02-18', 0, NULL, '2023-02-15 15:45:43');
+INSERT INTO `t_come` VALUES (4, '20301234568', '假期返校', '湖北', '2023-02-23', 0, NULL, '2023-02-15 16:11:57');
 
 -- ----------------------------
 -- Table structure for t_leave
@@ -309,13 +319,14 @@ CREATE TABLE `t_leave`  (
 -- ----------------------------
 -- Records of t_leave
 -- ----------------------------
-INSERT INTO `t_leave` VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_leave` VALUES (1, '20301234567', 'xxxxxxx', 'yyy', '2023-02-07', '2023-02-13', 0, NULL, '2023-02-06 16:13:42');
+INSERT INTO `t_leave` VALUES (2, '20301234568', 'awertyhjngbfvdcfsd', 'asdfghmn', '2023-02-20', '2023-02-21', 0, NULL, '2023-02-15 16:16:14');
 
 -- ----------------------------
 -- View structure for log_campus
 -- ----------------------------
 DROP VIEW IF EXISTS `log_campus`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `log_campus` AS select `log`.`s_id` AS `s_id`,`department`.`dept_name` AS `dept_name`,`campus`.`cname` AS `cname` from (((`log` join `student` on((`log`.`s_id` = `student`.`s_id`))) join `campus` on((`log`.`campusId` = `campus`.`campusId`))) join `department` on((`student`.`deptId` = `department`.`deptId`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `log_campus` AS select `log`.`s_id` AS `s_id`,`department`.`dept_name` AS `dept_name`,`campus`.`cname` AS `cname`,`log`.`time` AS `time` from (((`log` join `student` on((`log`.`s_id` = `student`.`s_id`))) join `campus` on((`log`.`campusId` = `campus`.`campusId`))) join `department` on((`student`.`deptId` = `department`.`deptId`)));
 
 -- ----------------------------
 -- View structure for student_state

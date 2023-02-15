@@ -8,10 +8,6 @@ import java.sql.*;
 import java.util.Properties;
 
 public class DBUtil {
-    /*static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String MYSQL_URL = "jdbc:mysql://localhost:3306/database_project?serverTimezone=Asia/Shanghai";
-    static final String USERNAME = "root";
-    static final String PASSWORD = "root";*/
 
     static {
         Properties pros = new Properties();
@@ -23,16 +19,16 @@ public class DBUtil {
             e.printStackTrace();
         }
     }
-    private static  DruidDataSource source;
+
+    private static DruidDataSource source;
 
     public static Connection getConnection() {
         try {
-            Connection conn=source.getConnection();
-            return conn;
+            return source.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return   null;
+        return null;
     }
 
     public static void closeResource(Connection conn) {

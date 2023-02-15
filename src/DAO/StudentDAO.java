@@ -27,12 +27,12 @@ public class StudentDAO implements StudentImplement {
 
     @Override
     public Boolean IsStudent(Connection conn, String id) {
-        String sql="select count(*)  from student where s_id=?";
-        long m= 0;
+        String sql = "select count(*)  from student where s_id=?";
+        long m = 0;
         try {
-            m = queryRunner.query(conn,sql,new ScalarHandler<>(),id);
-            if(m==0) return false;
-            else  return true;
+            m = queryRunner.query(conn, sql, new ScalarHandler<>(), id);
+            if (m == 0) return false;
+            else return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,12 +55,12 @@ public class StudentDAO implements StudentImplement {
             }
             return false;
         }*/
-    public boolean InsertStudent(Connection conn,Student student) {
+    public boolean InsertStudent(Connection conn, Student student) {
         String sql = "insert into student () values(?, ?, ?, ?,?,?,?,?,?,?)";
         try {
-            queryRunner.update(conn,sql,student.getAdress(),student.getClassName(),student.getName(),
-                    student.getDepartment(),student.getEmail(),student.getFamilyAdress(),student.getS_id(),student.getTellphone(),student.getType(),student.getIdNumber());
-            return  true;
+            queryRunner.update(conn, sql, student.getAdress(), student.getClassName(), student.getName(),
+                    student.getDepartment(), student.getEmail(), student.getFamilyAdress(), student.getS_id(), student.getTellphone(), student.getType(), student.getIdNumber());
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
