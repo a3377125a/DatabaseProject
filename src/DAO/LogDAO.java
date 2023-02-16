@@ -19,7 +19,7 @@ public class LogDAO implements LogDAOImplement {
     public Map<String, String> getCampus(Connection conn, int n) {
         String sql = "SELECT dept_name from department";
         try {
-            List<String> list = queryRunner.query(conn, sql, new ColumnListHandler<String>());
+            List<String> list = queryRunner.query(conn, sql, new ColumnListHandler<>());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             calendar.add(Calendar.DATE, -n + 1);
@@ -45,13 +45,11 @@ public class LogDAO implements LogDAOImplement {
 
 //    已出校但尚未返回校园（即离校状态）的学生数量、个人信息及各自的离校时间(全校范围内)；
     public List<Object[]> getLeaveStudents(Connection conn) {
-        String sql = "select s_id,time1 from student_state where action='离校'";
+        String sql = "select s_id,name,time1 from student_state natural join student where action='离校'";
         List<Object[]> studentLists = null;
         try {
             studentLists = queryRunner.query(conn, sql, new ArrayListHandler());
-            for (Object[] objects : studentLists) {
-                System.out.println(objects[0] + "    " + (Date) objects[1]);
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,14 +67,9 @@ public class LogDAO implements LogDAOImplement {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sql = "select s_id,time1 from student_state natural join student where action='离校'and deptId=?";
-        List<Object[]> studentLists = null;
+        sql = "select s_id,name,time1 from student_state natural join student where action='离校'and deptId=?";
         try {
-            studentLists = queryRunner.query(conn, sql, new ArrayListHandler(), deptId);
-            for (Object[] objects : studentLists) {
-                System.out.println(objects[0] + "    " + (Date) objects[1]);
-            }
-            return studentLists;
+            return queryRunner.query(conn, sql, new ArrayListHandler(), deptId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -98,8 +91,8 @@ public class LogDAO implements LogDAOImplement {
 
     //过去 n 天一直在校未曾出校的学生，全校进行筛选
     @Override
-    public List<String> UnLeaveStudent(Connection conn, int n) {
-        String sql = "select s_id FROM  student_state where s_id not in ( SELECT DISTINCT s_id from log where time >= ? ) and action='入校'";
+    public List<Student> UnLeaveStudent(Connection conn, int n) {
+        String sql = "select s_id,name FROM  student_state natural join student where s_id not in ( SELECT DISTINCT s_id from log where time >= ? ) and action='入校'";
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, -n + 1);
@@ -108,15 +101,12 @@ public class LogDAO implements LogDAOImplement {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date time = calendar.getTime();
-        List<String> list = null;
+        List<Student> list = null;
         try {
-            list = queryRunner.query(conn, sql, new ColumnListHandler<>(), time);
+            list = queryRunner.query(conn, sql, new BeanListHandler<>(Student.class), time);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*for (String s : list) {
-            System.out.println(s);
-        }*/
         return list;
     }
 
@@ -229,7 +219,5 @@ public class LogDAO implements LogDAOImplement {
         return null;
     }
 
-    public static void main(String[] args) {
 
-    }
 }

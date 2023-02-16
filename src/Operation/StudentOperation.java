@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class StudentOperation {
     //学生
-    private Student student;
+    private final Student student;
 
     public StudentOperation(String id) {
         StudentImplement stuImpl = new StudentDAO();
@@ -31,7 +31,7 @@ public class StudentOperation {
         System.out.println("-------------------------------------------");
         System.out.println("                  欢迎登陆                   ");
         System.out.println("学生ID:" + student.getS_id() + "    学生姓名：" + student.getName());
-        System.out.println("             " + student.getDepartment() + "  " + student.getClassName());
+        System.out.println("学院：" + student.getDepartment() + "    班级：" + student.getClassName());
         help();
     }
 
@@ -56,7 +56,6 @@ public class StudentOperation {
         //展示学生详细信息
         System.out.println("个人详细信息如下：");
         System.out.println(student);
-
     }
 
     public void fun2() {
@@ -101,7 +100,7 @@ public class StudentOperation {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        tcomeDAOImplement.addTcome(conn, student.getS_id(), reason, addresses, newtime,new Date());
+        tcomeDAOImplement.addTcome(conn, student.getS_id(), reason, addresses, newtime, new Date());
         DBUtil.closeResource(conn);
         System.out.println("填写成功！");
     }
@@ -132,7 +131,7 @@ public class StudentOperation {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        tleaveDAOImplement.addTleave(conn, student.getS_id(), reason, addresses, newtime1, newtime2,new Date());
+        tleaveDAOImplement.addTleave(conn, student.getS_id(), reason, addresses, newtime1, newtime2, new Date());
         DBUtil.closeResource(conn);
         System.out.println("填写成功！");
     }
@@ -189,11 +188,11 @@ public class StudentOperation {
                 case 4 -> tcomeDAOImplement.getTcome(conn, student.getS_id(), 4);
                 default -> null;
             };
-            if (tcomes != null) {
+            if (tcomes != null && !tcomes.isEmpty()) {
                 for (Tcome t : tcomes) {
                     System.out.println(t);
                 }
-            }else{
+            } else {
                 System.out.println("当前类别申请暂无");
             }
         }
@@ -213,7 +212,7 @@ public class StudentOperation {
             System.out.println("请输入具体类别对应序号：");
             Scanner scanner = new Scanner(System.in);
             int n = scanner.nextInt();
-            if(n==5) flag=false;
+            if (n == 5) flag = false;
             List<Tleave> tleaves = switch (n) {
                 case 1 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 1);
                 case 2 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 2);
@@ -221,7 +220,7 @@ public class StudentOperation {
                 case 4 -> tleaveDAOImplement.getTleave(conn, student.getS_id(), 4);
                 default -> null;
             };
-            if (tleaves != null) {
+            if (tleaves != null && !tleaves.isEmpty()) {
                 for (Tleave t : tleaves) {
                     System.out.println(t);
                 }
@@ -237,26 +236,24 @@ public class StudentOperation {
         System.out.println("过去一年离校总时长为：" + s);
     }
 
-    public static void main(String[] args) {
-        String ID = "20301234568";
-        StudentOperation studentOperation = new StudentOperation(ID);
-        studentOperation.show();
+    public void run() {
+        this.show();
         boolean flag = true;
         while (flag) {
             System.out.println("请输入对应功能的序号：");
             Scanner scanner = new Scanner(System.in);
             int fun = scanner.nextInt();
             switch (fun) {
-                case 1 -> studentOperation.fun1();
-                case 2 -> studentOperation.fun2();
-                case 3 -> studentOperation.fun3();
-                case 4 -> studentOperation.fun4();
-                case 5 -> studentOperation.fun5();
-                case 6 -> studentOperation.fun6();
-                case 7 -> studentOperation.fun7();
-                case 8 -> studentOperation.fun8();
-                case 9 -> studentOperation.fun9();
-                case 10 -> studentOperation.help();
+                case 1 -> this.fun1();
+                case 2 -> this.fun2();
+                case 3 -> this.fun3();
+                case 4 -> this.fun4();
+                case 5 -> this.fun5();
+                case 6 -> this.fun6();
+                case 7 -> this.fun7();
+                case 8 -> this.fun8();
+                case 9 -> this.fun9();
+                case 10 -> this.help();
                 case 11 -> flag = false;
             }
 

@@ -55,10 +55,13 @@ public class MainSystem {
         while (true) {
             System.out.println("欢迎使用A大学进出校管理系统，请输入您的ID:");
             String ID = scanner.nextLine();
+            if (ID.equals("exit")) {
+                break;
+            }
             if (ID.equals("admin")) {
                 //最高权限
                 SuperAdminOperation operation = new SuperAdminOperation();
-                operation.start();
+                operation.run();
             } else {
                 int n = ID.length();
                 if (n == 11) {
@@ -66,17 +69,16 @@ public class MainSystem {
                     if (s_confirm(ID)) {
                         System.out.println("登录成功！您当前的权限为：学生。");
                         StudentOperation studentOperation = new StudentOperation(ID);
+                        studentOperation.run();
                     } else {
                         System.out.println("输入学号无效");
                     }
-
                 } else if (n == 5) {
                     // 辅导员登录系统
                     if (i_confirm(ID)) {
-                        ClassAdminOperation instructorOperation = new ClassAdminOperation(ID);
-
-
-
+                        System.out.println("登录成功！您当前的权限为：班级辅导员。");
+                        ClassAdminOperation classAdminOperation = new ClassAdminOperation(ID);
+                        classAdminOperation.run();
                     } else {
                         System.out.println("输入工号无效");
                     }
@@ -84,14 +86,15 @@ public class MainSystem {
                 } else if (n == 4) {
                     //院系管理员登录系统
                     if (a_confirm(ID)) {
-                        DeptAdminOperation adminOperation = new DeptAdminOperation();
+                        System.out.println("登录成功！您当前的权限为：院系管理员。");
+                        DeptAdminOperation deptAdminOperation = new DeptAdminOperation(ID);
+                        deptAdminOperation.run();
                     } else {
                         System.out.println("输入工号无效");
                     }
                 } else {
                     System.out.println("输入格式错误！");
                 }
-
             }
         }
     }

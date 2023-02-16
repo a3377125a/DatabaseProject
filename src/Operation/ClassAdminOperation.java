@@ -1,5 +1,4 @@
 package Operation;
-
 import DAO.*;
 import Entity.*;
 import Utils.DBUtil;
@@ -11,11 +10,10 @@ import java.util.Scanner;
 public class ClassAdminOperation {
 
     private final Instructor instructor;
-    private final InstructorImplement instructorDAO;
     private final StudentDAO studentDAO;
 
     public ClassAdminOperation(String id) {
-        instructorDAO = new InstructorDAO();
+        InstructorImplement instructorDAO = new InstructorDAO();
         studentDAO = new StudentDAO();
         Connection conn = DBUtil.getConnection();
         instructor = instructorDAO.GetInstructor(conn, id);
@@ -368,30 +366,27 @@ public class ClassAdminOperation {
 
 //    9.查询连续 n 天填写“健康日报”时间（精确到分钟）完全一致的学生数量，个人信息
     public void fun9() {
-
-
+//todo
     }
 
-    public static void main(String[] args) {
-        String ID = "01001";
-        ClassAdminOperation classAdminOperation = new ClassAdminOperation(ID);
-        classAdminOperation.show();
+    public void run() {
+        this.show();
         boolean flag = true;
         while (flag) {
             System.out.println("请输入对应功能的序号：");
             Scanner scanner = new Scanner(System.in);
             int fun = scanner.nextInt();
             switch (fun) {
-                case 1 -> classAdminOperation.fun1();
-                case 2 -> classAdminOperation.fun2();
-                case 3 -> classAdminOperation.fun3();
-                case 4 -> classAdminOperation.fun4();
-                case 5 -> classAdminOperation.fun5();
-                case 6 -> classAdminOperation.fun6();
-                case 7 -> classAdminOperation.fun7();
-                case 8 -> classAdminOperation.fun8();
-                case 9 -> classAdminOperation.fun9();
-                case 10 -> classAdminOperation.help();
+                case 1 -> this.fun1();
+                case 2 -> this.fun2();
+                case 3 -> this.fun3();
+                case 4 -> this.fun4();
+                case 5 -> this.fun5();
+                case 6 -> this.fun6();
+                case 7 -> this.fun7();
+                case 8 -> this.fun8();
+                case 9 -> this.fun9();
+                case 10 -> this.help();
                 case 11 -> flag = false;
             }
 

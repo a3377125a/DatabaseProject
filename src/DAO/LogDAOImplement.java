@@ -21,7 +21,7 @@ public interface LogDAOImplement {
     List<Object[]> getLeaveStudents2(Connection conn, String className, int deptID);
 
     //过去 n 天一直在校未曾出校的学生，全校进行筛选
-    List<String> UnLeaveStudent(Connection conn, int n) ;
+    List<Student> UnLeaveStudent(Connection conn, int n) ;
 
     //过去 n 天一直在校未曾出校的学生，全系进行筛选(输入的是院系名)
     List<Student> UnLeaveStudent1(Connection conn, int n, int deptID);
