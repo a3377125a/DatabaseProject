@@ -20,7 +20,7 @@ public class TleaveDAO implements TleaveDAOImplement {
 
     @Override
     public Boolean addTleave(Connection conn, String s_id, String reason, String destAdress, Date leavedate, Date comedate, Date date) {
-        String sql = "insert into t_leave(s_id,reason,destAdress,leavedate,comedate,state,date) values(?,?,?,?,?,0,?)";
+        String sql = "insert into t_leave(s_id,reason,destAdress,leavedate,comedate,state,date) values(?,?,?,?,?,1,?)";
         try {
             queryRunner.update(conn, sql, s_id, reason, destAdress, leavedate, comedate, date);
         } catch (SQLException e) {

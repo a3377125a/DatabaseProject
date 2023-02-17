@@ -19,7 +19,7 @@ public class TcomeDAO implements TcomeDAOImplement {
 
     @Override
     public Boolean addTcome(Connection conn, String s_id, String reason, String Addresses, Date comedate, Date date) {
-        String sql = "INSERT into  t_come(s_id,reason,Addresses,comedate,state,date)  VALUES (?,?,?,?,0,?)";
+        String sql = "INSERT into  t_come(s_id,reason,Addresses,comedate,state,date)  VALUES (?,?,?,?,1,?)";
         try {
             queryRunner.update(conn, sql, s_id, reason, Addresses, comedate, date);
             return true;
